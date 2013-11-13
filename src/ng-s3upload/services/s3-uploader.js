@@ -13,7 +13,7 @@ angular.module('ngS3upload.services', []).
         });
 
       return deferred.promise;
-    }
+    };
 
     this.randomString = function (length) {
       var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -21,7 +21,7 @@ angular.module('ngS3upload.services', []).
       for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
 
       return result;
-    }
+    };
 
 
     this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file) {
@@ -52,7 +52,7 @@ angular.module('ngS3upload.services', []).
             scope.progress = 'unable to compute';
           }
         });
-      };
+      }
       function uploadComplete(e) {
         scope.$apply(function () {
           self.uploads--;
@@ -60,7 +60,7 @@ angular.module('ngS3upload.services', []).
           scope.success = true;
           deferred.resolve();
         });
-      };
+      }
       function uploadFailed(e) {
         scope.$apply(function () {
           self.uploads--;
@@ -68,7 +68,7 @@ angular.module('ngS3upload.services', []).
           scope.success = false;
           deferred.reject();
         });
-      };
+      }
       function uploadCanceled(e) {
         scope.$apply(function () {
           self.uploads--;
@@ -76,7 +76,7 @@ angular.module('ngS3upload.services', []).
           scope.success = false;
           deferred.reject();
         });
-      };
+      }
 
       // Send the file
       scope.uploading = true;
@@ -85,10 +85,9 @@ angular.module('ngS3upload.services', []).
       xhr.send(fd);
 
       return deferred.promise;
-    }
+    };
 
     this.isUploading = function () {
-      this.uploads > 0;
-    }
-
+      return this.uploads > 0;
+    };
   }]);
