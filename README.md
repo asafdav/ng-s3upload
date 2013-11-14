@@ -1,4 +1,4 @@
-ng-s3upload - Upload to S3 using AngularJ
+ng-s3upload - Upload to S3 using AngularJS
 ===========
 
 An AngularJS directive that allows you to simply upload files directly to AWS S3.
