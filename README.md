@@ -99,3 +99,7 @@ attributes:
 * s3-upload-options - Provide additional options:
   * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#3) - Required. 
   
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/asafdav/ng-s3upload/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
