@@ -6,31 +6,41 @@ An AngularJS directive that allows you to simply upload files directly to AWS S3
 ## Setup 
 1. Create AWS S3 bucket
 
-2. Add CORS configuration to your bucket
-In AWS web interface, select S3 and select the wanted bucket. 
-Expand the "Permissions" section and click on the "Add CORS configuration" button. Paste the wanted CORS configuration, for example: 
+2. Grant "put/delete" permissions to everyone 
+In WAS web interface, select S3 and select the wanted bucked, 
+Expand the "Permissions" sections and click on the "Add more permissions" button. select "Everyone" and "Upload/Delete" and save.
+
+3. Add CORS configuration to your bucket
+
+  In AWS web interface, select S3 and select the wanted bucket. 
+  Expand the "Permissions" section and click on the "Add CORS configuration" button. Paste the wanted CORS configuration, for example: 
   ```XML
   <?xml version="1.0" encoding="UTF-8"?>
   <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
       <CORSRule>
           <AllowedOrigin>*</AllowedOrigin>
           <AllowedMethod>GET</AllowedMethod>
-          <MaxAgeSeconds>3000</MaxAgeSeconds>
-          <AllowedHeader>Authorization</AllowedHeader>
-      </CORSRule>
-      <CORSRule>
-          <AllowedOrigin>*</AllowedOrigin>
+          <AllowedMethod>POST</AllowedMethod>
           <AllowedMethod>PUT</AllowedMethod>
-          <MaxAgeSeconds>3000</MaxAgeSeconds>
-          <AllowedHeader>Content-Type</AllowedHeader>
-          <AllowedHeader>x-amz-acl</AllowedHeader>
-          <AllowedHeader>origin</AllowedHeader>
+          <AllowedHeader>*</AllowedHeader>
       </CORSRule>
   </CORSConfiguration>
-  ```
-Once the CORS permissions are updated, your bucket is ready for client side uploads.
+    ```
 
-3. Create a server side service that will return the needed details for uploading files to S3.
+  In addition, create the following crossdomain.xml file and upload it to the root of your bucket.
+
+  ```XML
+  <?xml version="1.0"?>
+  <!DOCTYPE cross-domain-policy SYSTEM
+  "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd">
+  <cross-domain-policy>
+    <allow-access-from domain="*" secure="false" />
+  </cross-domain-policy>
+  ```
+
+  Once the CORS permissions are updated, your bucket is ready for client side uploads.
+
+4. Create a server side service that will return the needed details for uploading files to S3.
 your service shall return a json in the following format: 
 
   ```json
@@ -78,7 +88,7 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
         end
     end
   ```
-4. Download ng-s3upload.min.js and add it to your project or use bower (bower install ng-s3upload --save).
+5. Download ng-s3upload.min.js and add it to your project or use bower (bower install ng-s3upload --save).
 
 ## Usage
 1. Add ng-s3upload.min.js to your main file (index.html)
