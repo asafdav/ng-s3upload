@@ -56,8 +56,8 @@ angular.module('ngS3upload.directives', []).
               scope.$apply(function () {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
                   ngModel.$setValidity('uploading', false);
-                  var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/' + opts.folder;
-                  var key = (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                  var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
+                  var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
                       s3Uri,
                       key,
