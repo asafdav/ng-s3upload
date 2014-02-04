@@ -79,6 +79,9 @@ angular.module('ngS3upload.services', []).
           } else {
             scope.progress = 'unable to compute';
           }
+          if (typeof deferred.notify === 'function') {
+            deferred.notify({type: 'progress', value: scope.progress});
+          }
         });
       }
       function uploadComplete(e) {
