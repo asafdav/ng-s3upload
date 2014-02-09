@@ -107,7 +107,7 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
 attributes: 
 * bucket - Speificy the wanted bucket
 * s3-upload-options - Provide additional options:
-  * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#3) - Required. 
+  * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#4) - Required. 
   
 
 
