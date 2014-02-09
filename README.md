@@ -101,13 +101,14 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
 3. Add s3-upload directive to the wanted element, example:
   ```html
   <div s3-upload bucket="s3Bucket" ng-model="product.remote_product_file_url"
-     s3-upload-options="{getOptionsUri: s3OptionsUri}" >
+     s3-upload-options="{getOptionsUri: s3OptionsUri, folder: 'images'}">
   ```
 
 attributes: 
 * bucket - Speificy the wanted bucket
 * s3-upload-options - Provide additional options:
   * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#4) - Required. 
+  * folder - optional, specifies a folder inside the bucket the save the file to
   
 
 
