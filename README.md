@@ -7,8 +7,8 @@ An AngularJS directive that allows you to simply upload files directly to AWS S3
 1. Create AWS S3 bucket
 
 2. Grant "put/delete" permissions to everyone 
-In WAS web interface, select S3 and select the wanted bucked, 
-Expand the "Permissions" sections and click on the "Add more permissions" button. select "Everyone" and "Upload/Delete" and save.
+In AWS web interface, select S3 and select the destination bucket, then 
+expand the "Permissions" sections and click on the "Add more permissions" button. Select "Everyone" and "Upload/Delete" and save.
 
 3. Add CORS configuration to your bucket
 
