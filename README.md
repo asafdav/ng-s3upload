@@ -86,7 +86,6 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
         def s3_upload_signature
           Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), GLOBAL[:aws_secret], s3_upload_policy)).gsub("\n","")
         end
-    end
   ```
 5. Download ng-s3upload.min.js and add it to your project or use bower (bower install ng-s3upload --save).
 
