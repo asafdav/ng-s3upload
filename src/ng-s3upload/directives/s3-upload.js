@@ -13,7 +13,7 @@ angular.module('ngS3upload.directives', []).
 
         $scope.barClass = function () {
           return {
-            "bar-success": $scope.attempt && !$scope.uploading && $scope.success
+            "progress-bar-success": $scope.attempt && !$scope.uploading && $scope.success
           };
         };
       }],
@@ -96,7 +96,7 @@ angular.module('ngS3upload.directives', []).
         '<button class="btn btn-primary" type="button"><span ng-if="!filename">Choose file</span><span ng-if="filename">Replace file</span></button>' +
         '<a ng-href="{{ filename  }}" target="_blank" class="" ng-if="filename" > Stored file </a>' +
         '<div class="progress progress-striped" ng-class="{active: uploading}" ng-show="attempt" style="margin-top: 10px">' +
-        '<div class="bar" style="width: {{ progress }}%;" ng-class="barClass()"></div>' +
+        '<div class="progress-bar" style="width: {{ progress }}%;" ng-class="barClass()"></div>' +
         '</div>' +
         '<input type="file" style="display: none"/>' +
         '</div>'
