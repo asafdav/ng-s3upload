@@ -1,6 +1,6 @@
 {
     "name": "ng-s3upload",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "main": "build/ng-s3upload.js",
     "dependencies": {
         "angular": "~1.0.7",
