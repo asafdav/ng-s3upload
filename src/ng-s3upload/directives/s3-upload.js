@@ -48,6 +48,7 @@ angular.module('ngS3upload.directives', []).
               scope.filename = ngModel.$viewValue;
             };
 
+
             var uploadFile = function () {
               var selectedFile = file[0].files[0];
               var filename = selectedFile.name;
@@ -56,24 +57,27 @@ angular.module('ngS3upload.directives', []).
               scope.$apply(function () {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
                   ngModel.$setValidity('uploading', false);
-                  var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
+                  var s3Uri = 'http://' + bucket + '.s3.amazonaws.com/';
                   var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
                       s3Uri,
                       key,
                       opts.acl,
                       selectedFile.type,
-                      s3Options.key,
+                      s3Options.AWSAccessKeyId,
                       s3Options.policy,
                       s3Options.signature,
-                      selectedFile
+                      selectedFile,
+                      opts.extraHeaders
                     ).then(function () {
                       ngModel.$setViewValue(s3Uri + key);
                       scope.filename = ngModel.$viewValue;
+                      opts.uploadDoneCallback(scope.filename, key);
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
                     }, function () {
                       scope.filename = ngModel.$viewValue;
+                      opts.uploadErrorCallback();
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', false);
                     });
