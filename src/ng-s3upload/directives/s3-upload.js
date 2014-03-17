@@ -34,6 +34,8 @@ angular.module('ngS3upload.directives', []).
               uploadingKey: 'uploading',
               folder: ''
             }, opts);
+
+            opts.uploadStartCallback();
             var bucket = scope.$eval(attrs.bucket);
 
             // Bind the button click event
@@ -47,7 +49,6 @@ angular.module('ngS3upload.directives', []).
             ngModel.$render = function () {
               scope.filename = ngModel.$viewValue;
             };
-
 
             var uploadFile = function () {
               var selectedFile = file[0].files[0];
