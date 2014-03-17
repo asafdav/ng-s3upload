@@ -91,7 +91,7 @@ angular.module('ngS3upload.services', []).
       // Send the file
       scope.uploading = true;
       this.uploads++;
-      
+
       xhr.open('POST', uri, true);
       xhr.setRequestHeader("Accept", "application/json");
       xhr.send(fd);
