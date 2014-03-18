@@ -34,6 +34,8 @@ angular.module('ngS3upload.directives', []).
               uploadingKey: 'uploading',
               folder: ''
             }, opts);
+
+            opts.uploadStartCallback();
             var bucket = scope.$eval(attrs.bucket);
 
             // Bind the button click event
@@ -56,24 +58,27 @@ angular.module('ngS3upload.directives', []).
               scope.$apply(function () {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
                   ngModel.$setValidity('uploading', false);
-                  var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
+                  var s3Uri = 'http://' + bucket + '.s3.amazonaws.com/';
                   var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
                       s3Uri,
                       key,
                       opts.acl,
                       selectedFile.type,
-                      s3Options.key,
+                      s3Options.AWSAccessKeyId,
                       s3Options.policy,
                       s3Options.signature,
-                      selectedFile
+                      selectedFile,
+                      opts.extraHeaders
                     ).then(function () {
                       ngModel.$setViewValue(s3Uri + key);
                       scope.filename = ngModel.$viewValue;
+                      opts.uploadDoneCallback(scope.filename, key);
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', true);
                     }, function () {
                       scope.filename = ngModel.$viewValue;
+                      opts.uploadErrorCallback();
                       ngModel.$setValidity('uploading', true);
                       ngModel.$setValidity('succeeded', false);
                     });
@@ -93,10 +98,11 @@ angular.module('ngS3upload.directives', []).
         };
       },
       template: '<div class="upload-wrap">' +
-        '<button class="btn btn-primary" type="button"><span ng-if="!filename">Choose file</span><span ng-if="filename">Replace file</span></button>' +
-        '<a ng-href="{{ filename  }}" target="_blank" class="" ng-if="filename" > Stored file </a>' +
-        '<div class="progress progress-striped" ng-class="{active: uploading}" ng-show="attempt" style="margin-top: 10px">' +
-        '<div class="bar" style="width: {{ progress }}%;" ng-class="barClass()"></div>' +
+        '<button class="btn btn-primary" type="button" ng-show="!filename"><span ng-if="!filename">Choose file</span></button>' +
+        '<div class="progress" ng-show="attempt">' +
+        '<div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;">' +
+        '<span class="sr-only">{{ progress }}%</span>' +
+        '</div>' +
         '</div>' +
         '<input type="file" style="display: none"/>' +
         '</div>'

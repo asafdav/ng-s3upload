@@ -24,11 +24,18 @@ angular.module('ngS3upload.services', []).
     };
 
 
-    this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file) {
+    this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file, extraHeaders) {
       var deferred = $q.defer();
       scope.attempt = true;
 
       var fd = new FormData();
+
+      for (var headerKey in extraHeaders)
+      {
+          var headerVal = extraHeaders[headerKey];
+          fd.append(headerVal.name, headerVal.value);
+      }
+
       fd.append('key', key);
       fd.append('acl', acl);
       fd.append('Content-Type', file.type);
@@ -84,7 +91,9 @@ angular.module('ngS3upload.services', []).
       // Send the file
       scope.uploading = true;
       this.uploads++;
+
       xhr.open('POST', uri, true);
+      xhr.setRequestHeader("Accept", "application/json");
       xhr.send(fd);
 
       return deferred.promise;
