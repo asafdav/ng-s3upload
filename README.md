@@ -100,7 +100,7 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
 3. Add s3-upload directive to the wanted element, example:
   ```html
   <div s3-upload bucket="s3Bucket" ng-model="product.remote_product_file_url"
-     s3-upload-options="{getOptionsUri: s3OptionsUri, folder: 'images'}">
+     s3-upload-options="{getOptionsUri: s3OptionsUri, folder: 'images/'}">
   ```
 
 attributes: 
