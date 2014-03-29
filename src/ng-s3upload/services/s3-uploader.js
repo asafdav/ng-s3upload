@@ -42,6 +42,7 @@ angular.module('ngS3upload.services', []).
       xhr.addEventListener("load", uploadComplete, false);
       xhr.addEventListener("error", uploadFailed, false);
       xhr.addEventListener("abort", uploadCanceled, false);
+      scope.$emit('s3upload:start', xhr);
 
       // Define event handlers
       function uploadProgress(e) {
@@ -51,33 +52,48 @@ angular.module('ngS3upload.services', []).
           } else {
             scope.progress = 'unable to compute';
           }
+          var msg = {type: 'progress', value: scope.progress};
+          scope.$emit('s3upload:progress', msg);
           if (typeof deferred.notify === 'function') {
-            deferred.notify({type: 'progress', value: scope.progress});
+            deferred.notify(msg);
           }
+
         });
       }
       function uploadComplete(e) {
+        var xhr = e.srcElement || e.target;
         scope.$apply(function () {
           self.uploads--;
           scope.uploading = false;
-          scope.success = true;
-          deferred.resolve();
+          if (xhr.status === 204) { // successful upload
+            scope.success = true;
+            deferred.resolve(xhr);
+            scope.$emit('s3upload:success', xhr);
+          } else {
+            scope.success = false;
+            deferred.reject(xhr);
+            scope.$emit('s3upload:error', xhr);
+          }
         });
       }
       function uploadFailed(e) {
+        var xhr = e.srcElement || e.target;
         scope.$apply(function () {
           self.uploads--;
           scope.uploading = false;
           scope.success = false;
-          deferred.reject();
+          deferred.reject(xhr);
+          scope.$emit('s3upload:error', xhr);
         });
       }
       function uploadCanceled(e) {
+        var xhr = e.srcElement || e.target;
         scope.$apply(function () {
           self.uploads--;
           scope.uploading = false;
           scope.success = false;
-          deferred.reject();
+          deferred.reject(xhr);
+          scope.$emit('s3upload:abort', xhr);
         });
       }
 
