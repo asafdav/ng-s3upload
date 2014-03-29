@@ -108,6 +108,7 @@ attributes:
 * s3-upload-options - Provide additional options:
   * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#4) - Required. 
   * folder - optional, specifies a folder inside the bucket the save the file to
+  * enableValidation - optional, set to "false" in order to disable the field validation. 
   
 
 
