@@ -89,6 +89,9 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
           Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), GLOBAL[:aws_secret], s3_upload_policy)).gsub("\n","")
         end
   ```
+  
+  The following code generates a policy for upload that will be used by S3, in the example we limit the maximum file size to 10MB (10 * 1024 * 1024), update it to match your requirments. for a full list of S3's policy options, please refer to [AWS documentation](http://docs.aws.amazon.com/AmazonS3/latest/dev/HTTPPOSTExamples.html#HTTPPOSTExamplesTextAreaPolicy).
+  
 5. Download ng-s3upload.min.js and add it to your project or use bower (bower install ng-s3upload --save).
 
 ## Usage
