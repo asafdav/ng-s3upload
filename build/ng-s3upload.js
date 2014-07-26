@@ -172,7 +172,8 @@ angular.module('ngS3upload.directives', []).
               getOptionsUri: '/getS3Options',
               acl: 'public-read',
               uploadingKey: 'uploading',
-              folder: ''
+              folder: '',
+              enableValidation: true
             }, opts);
             var bucket = scope.$eval(attrs.bucket);
 
@@ -195,7 +196,10 @@ angular.module('ngS3upload.directives', []).
 
               scope.$apply(function () {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
-                  ngModel.$setValidity('uploading', false);
+                  if (opts.enableValidation) {
+                    ngModel.$setValidity('uploading', false);
+                  }
+
                   var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
                   var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
@@ -210,12 +214,18 @@ angular.module('ngS3upload.directives', []).
                     ).then(function () {
                       ngModel.$setViewValue(s3Uri + key);
                       scope.filename = ngModel.$viewValue;
-                      ngModel.$setValidity('uploading', true);
-                      ngModel.$setValidity('succeeded', true);
+
+                      if (opts.enableValidation) {
+                        ngModel.$setValidity('uploading', true);
+                        ngModel.$setValidity('succeeded', true);
+                      }
                     }, function () {
                       scope.filename = ngModel.$viewValue;
-                      ngModel.$setValidity('uploading', true);
-                      ngModel.$setValidity('succeeded', false);
+
+                      if (opts.enableValidation) {
+                        ngModel.$setValidity('uploading', true);
+                        ngModel.$setValidity('succeeded', false);
+                      }
                     });
 
                 }, function (error) {
@@ -233,13 +243,15 @@ angular.module('ngS3upload.directives', []).
         };
       },
       template: '<div class="upload-wrap">' +
-        '<button class="btn btn-primary" type="button"><span ng-if="!filename">Choose file</span><span ng-if="filename">Replace file</span></button>' +
-        '<a ng-href="{{ filename  }}" target="_blank" class="" ng-if="filename" > Stored file </a>' +
-        '<div class="progress progress-striped" ng-class="{active: uploading}" ng-show="attempt" style="margin-top: 10px">' +
-        '<div class="bar" style="width: {{ progress }}%;" ng-class="barClass()"></div>' +
-        '</div>' +
-        '<input type="file" style="display: none"/>' +
-        '</div>'
+          '<button class="btn btn-primary" type="button"><span ng-if="!filename">Choose file</span><span ng-if="filename">Replace file</span></button>' +
+          '<a ng-href="{{ filename }}" target="_blank" class="" ng-if="filename" > Stored file </a>' +
+          '<div class="progress">' +
+          '<div class="progress-bar progress-bar-striped" ng-class="{active: uploading}" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%; margin-top: 10px" ng-class="barClass()">' +
+          '<span class="sr-only">{{progress}}% Complete</span>' +
+          '</div>' +
+          '</div>' +
+          '<input type="file" style="display: none"/>' +
+          '</div>'
     };
   }]);
 })(window, document);
