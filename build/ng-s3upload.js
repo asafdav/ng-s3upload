@@ -172,7 +172,8 @@ angular.module('ngS3upload.directives', []).
               getOptionsUri: '/getS3Options',
               acl: 'public-read',
               uploadingKey: 'uploading',
-              folder: ''
+              folder: '',
+              enableValidation: true
             }, opts);
             var bucket = scope.$eval(attrs.bucket);
 
@@ -195,9 +196,12 @@ angular.module('ngS3upload.directives', []).
 
               scope.$apply(function () {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
-                  ngModel.$setValidity('uploading', false);
+                  if (opts.enableValidation) {
+                    ngModel.$setValidity('uploading', false);
+                  }
+
                   var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
-                  var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                  var key = attrs.key ? scope.$eval(attrs.key) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
                       s3Uri,
                       key,
@@ -210,12 +214,18 @@ angular.module('ngS3upload.directives', []).
                     ).then(function () {
                       ngModel.$setViewValue(s3Uri + key);
                       scope.filename = ngModel.$viewValue;
-                      ngModel.$setValidity('uploading', true);
-                      ngModel.$setValidity('succeeded', true);
+
+                      if (opts.enableValidation) {
+                        ngModel.$setValidity('uploading', true);
+                        ngModel.$setValidity('succeeded', true);
+                      }
                     }, function () {
                       scope.filename = ngModel.$viewValue;
-                      ngModel.$setValidity('uploading', true);
-                      ngModel.$setValidity('succeeded', false);
+
+                      if (opts.enableValidation) {
+                        ngModel.$setValidity('uploading', true);
+                        ngModel.$setValidity('succeeded', false);
+                      }
                     });
 
                 }, function (error) {

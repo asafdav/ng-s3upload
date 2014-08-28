@@ -61,7 +61,7 @@ angular.module('ngS3upload.directives', []).
                   }
 
                   var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
-                  var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                  var key = attrs.key ? scope.$eval(attrs.key) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                   S3Uploader.upload(scope,
                       s3Uri,
                       key,
