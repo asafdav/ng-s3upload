@@ -97,12 +97,14 @@ Here's a rails example, even if you're not a rails developer, read the code, it'
 ## Usage
 1. Add ng-s3upload.min.js to your main file (index.html)
 
-2. Set `ngS3upload` as a dependency in your module
+2. If you have not already done so, include [ngSanitize]( http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js) in your application.
+
+3. Set `ngS3upload` as a dependency in your module
   ```javascript
   var myapp = angular.module('myapp', ['ngS3upload'])
   ```
 
-3. Add s3-upload directive to the wanted element, example:
+4. Add s3-upload directive to the wanted element, example:
   ```html
   <div s3-upload bucket="s3Bucket" ng-model="product.remote_product_file_url"
      s3-upload-options="{getOptionsUri: s3OptionsUri, folder: 'images/'}">
