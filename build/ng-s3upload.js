@@ -96,7 +96,7 @@ angular.module('ngS3upload.services', []).
           if (xhr.status === 204) { // successful upload
             scope.success = true;
             deferred.resolve(xhr);
-            scope.$emit('s3upload:success', xhr);
+            scope.$emit('s3upload:success', xhr, {path: uri + key});
           } else {
             scope.success = false;
             deferred.reject(xhr);
@@ -193,7 +193,7 @@ angular.module('ngS3upload.directives', []).
               var selectedFile = file[0].files[0];
               var filename = selectedFile.name;
               var ext = filename.split('.').pop();
-              
+
               S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
                 if (opts.enableValidation) {
                   ngModel.$setValidity('uploading', false);
@@ -242,9 +242,7 @@ angular.module('ngS3upload.directives', []).
             });
 
             if (angular.isDefined(attrs.doUpload)) {
-              console.log('attrs.doUpload', attrs.doUpload);
               scope.$watch(attrs.doUpload, function(value) {
-                console.log('doUpload value', value);
                 if (value) uploadFile();
               });
             }
