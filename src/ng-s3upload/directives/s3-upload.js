@@ -1,5 +1,5 @@
 angular.module('ngS3upload.directives', []).
-  directive('s3Upload', ['$parse', 'S3Uploader', function ($parse, S3Uploader) {
+  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', function ($parse, S3Uploader, ngS3Config) {
     return {
       restrict: 'AC',
       require: '?ngModel',
@@ -109,13 +109,9 @@ angular.module('ngS3upload.directives', []).
           }
         };
       },
-      template: '<div class="upload-wrap">' +
-        '<button class="btn btn-primary" type="button"><span ng-if="!filename">Choose file</span><span ng-if="filename">Replace file</span></button>' +
-        '<a ng-href="{{ filename  }}" target="_blank" class="" ng-if="filename" > Stored file </a>' +
-        '<div class="progress progress-striped" ng-class="{active: uploading}" ng-show="attempt" style="margin-top: 10px">' +
-        '<div class="bar" style="width: {{ progress }}%;" ng-class="barClass()"></div>' +
-        '</div>' +
-        '<input type="file" style="display: none"/>' +
-        '</div>'
+      templateUrl: function(elm, attrs) {
+        var theme = attrs.theme || ngS3Config.theme;
+        return 'theme/' + theme + '.html';
+      }
     };
   }]);

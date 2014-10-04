@@ -6,6 +6,16 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     library: grunt.file.readJSON('bower.json'),
+    ngtemplates:  {
+      app:        {
+        cwd:      'src/<%= library.name %>/templates',
+        src:      'theme/**.html',
+        dest:     '.tmp/templates.js',
+        options: {
+          module:   'ngS3upload'
+        }
+      }
+    },
     concat: {
       options: {
         separator: ''
@@ -17,6 +27,7 @@ module.exports = function (grunt) {
           'src/<%= library.name %>/services/**/*.js',
           'src/<%= library.name %>/directives/**/*.js',
           'src/<%= library.name %>/filters/**/*.js',
+          '<%= ngtemplates.app.dest %>',
           'src/<%= library.name %>/<%= library.name %>.suffix'
         ],
         dest: 'build/<%= library.name %>.js'
@@ -75,6 +86,17 @@ module.exports = function (grunt) {
         'src/**/*'
       ],
       tasks: ['default']
+    },
+    clean: {
+      dist: {
+        files: [{
+          dot: false,
+          src: [
+            '.tmp',
+            'build/'
+          ]
+        }]
+      }
     }
   });
 
@@ -85,9 +107,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-angular-templates');
 
   grunt.registerTask('test', ['jshint', 'karma:unit']);
-  grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
+  grunt.registerTask('default', ['clean:dist','jshint:beforeConcat', 'ngtemplates', 'concat', 'jshint:afterConcat', 'uglify']);
   grunt.registerTask('livereload', ['default', 'watch']);
 
 };
