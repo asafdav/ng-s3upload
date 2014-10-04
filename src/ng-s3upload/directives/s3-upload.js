@@ -33,7 +33,8 @@ angular.module('ngS3upload.directives', []).
               acl: 'public-read',
               uploadingKey: 'uploading',
               folder: '',
-              enableValidation: true
+              enableValidation: true,
+              targetFilename: null
             }, opts);
             var bucket = scope.$eval(attrs.bucket);
 
@@ -60,7 +61,7 @@ angular.module('ngS3upload.directives', []).
                 }
 
                 var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
-                var key = opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                var key = opts.targetFilename ? scope.$eval(opts.targetFilename) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
                 S3Uploader.upload(scope,
                     s3Uri,
                     key,
