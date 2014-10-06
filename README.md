@@ -133,7 +133,16 @@ attributes:
   * enableValidation - optional, set to "false" in order to disable the field validation.
   * targetFilename - An optional attribute for the target filename. if provided the file will be renamed to the provided value instead of having the file original filename.
   
+## Themes
+ng-s3upload allows to customize the directive template using themes. Currently the available themes are: bootstrap2, bootstrap3
 
+#### How to?
+
+```javascript
+app.config(function(ngS3Config) {
+  ngS3Config.theme = 'bootstrap3';
+});
+```
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/asafdav/ng-s3upload/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
