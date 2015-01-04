@@ -129,7 +129,7 @@ attributes:
 * bucket - Specify the wanted bucket
 * s3-upload-options - Provide additional options:
   * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#4) - Required if second option is empty.
-  * getOptions - if for some reason you need to have your own mechanism of getting a policy, you can simply assign your scope variable to this option. Note it should be resolved on the moment of directive load.
+  * getManualOptions - if for some reason you need to have your own mechanism of getting a policy, you can simply assign your scope variable to this option. Note it should be resolved on the moment of directive load.
   * folder - optional, specifies a folder inside the bucket the save the file to
   * enableValidation - optional, set to "false" in order to disable the field validation.
   * targetFilename - An optional attribute for the target filename. if provided the file will be renamed to the provided value instead of having the file original filename.
