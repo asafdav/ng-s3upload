@@ -12,9 +12,7 @@ angular.module('ngS3upload.directives', []).
         $scope.uploading = false;
 
         $scope.barClass = function () {
-          return {
-            "bar-success": $scope.attempt && !$scope.uploading && $scope.success
-          };
+          return $scope.attempt && !$scope.uploading && $scope.success;
         };
       }],
       compile: function (element, attr, linker) {
