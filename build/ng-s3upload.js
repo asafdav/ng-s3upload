@@ -155,9 +155,7 @@ angular.module('ngS3upload.directives', []).
         $scope.uploading = false;
 
         $scope.barClass = function () {
-          return {
-            "bar-success": $scope.attempt && !$scope.uploading && $scope.success
-          };
+          return $scope.attempt && !$scope.uploading && $scope.success;
         };
       }],
       compile: function (element, attr, linker) {
@@ -273,8 +271,8 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "<div class=\"upload-wrap\">\n" +
     "  <button class=\"btn btn-primary\" type=\"button\"><span ng-if=\"!filename\">Choose file</span><span ng-if=\"filename\">Replace file</span></button>\n" +
     "  <a ng-href=\"{{ filename  }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" > Stored file </a>\n" +
-    "  <div class=\"progress progress-striped\" ng-class=\"{active: uploading}\" ng-show=\"attempt\" style=\"margin-top: 10px\">\n" +
-    "    <div class=\"bar\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\"></div>\n" +
+    "  <div class=\"progress progress-striped\" ng-class=\"{'active': uploading}\" ng-show=\"attempt\" style=\"margin-top: 10px\">\n" +
+    "    <div class=\"bar\" style=\"width: {{ progress }}%;\" ng-class=\"{'bar-success': barClass()}\"></div>\n" +
     "    </div>\n" +
     "  <input type=\"file\" style=\"display: none\"/>\n" +
     "</div>"
@@ -285,9 +283,9 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
     "<div class=\"upload-wrap\">\n" +
     "  <button class=\"btn btn-primary\" type=\"button\"><span ng-if=\"!filename\">Choose file</span><span ng-if=\"filename\">Replace file</span></button>\n" +
     "  <a ng-href=\"{{ filename }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" > Stored file </a>\n" +
-    "  <div class=\"progress\">\n" +
-    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
-    "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
+    "  <div class=\"progress\" style=\"margin-top: 10px\" ng-show=\"attempt\">\n" +
+    "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{'active': uploading, 'progress-bar-success': barClass()}\" role=\"progressbar\" aria-valuenow=\"{{ progress }}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%\">\n" +
+    "      <span class=\"sr-only\">{{ progress }}% Complete</span>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "  <input type=\"file\" style=\"display: none\"/>\n" +
