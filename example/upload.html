@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
 <head>
-  <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
   <script src="../build/ng-s3upload.js"></script>
@@ -32,6 +33,10 @@
 
 <script>
   var myapp = angular.module('myapp', ["ngSanitize", "ngS3upload"]);
+
+  myapp.config(['ngS3Config', function (ngS3Config) {
+    ngS3Config.theme = 'bootstrap3';
+  }]);
 
   myapp.controller('myctrl', function ($scope) {
     $scope.files = {
