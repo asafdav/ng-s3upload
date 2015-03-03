@@ -1,5 +1,5 @@
-angular.module('ngS3upload.directives', []).
-  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', function ($parse, S3Uploader, ngS3Config) {
+angular.module('ngS3upload.directives').
+  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', 'ngS3UploadConfig', function ($parse, S3Uploader, ngS3Config, ngS3UploadConfig) {
     return {
       restrict: 'AC',
       require: '?ngModel',
@@ -11,10 +11,8 @@ angular.module('ngS3upload.directives', []).
         $scope.success = false;
         $scope.uploading = false;
 
-        $scope.barClass = function () {
-          return {
-            "bar-success": $scope.attempt && !$scope.uploading && $scope.success
-          };
+        $scope.isUploadSuccessful = function(){
+          return $scope.attempt && !$scope.uploading && $scope.success;
         };
       }],
       compile: function (element, attr, linker) {
@@ -36,7 +34,7 @@ angular.module('ngS3upload.directives', []).
               folder: '',
               enableValidation: true,
               targetFilename: null
-            }, opts);
+            }, ngS3UploadConfig, opts);
             var bucket = scope.$eval(attrs.bucket);
 
             // Bind the button click event
@@ -119,7 +117,12 @@ angular.module('ngS3upload.directives', []).
       },
       templateUrl: function(elm, attrs) {
         var theme = attrs.theme || ngS3Config.theme;
-        return 'theme/' + theme + '.html';
+
+        if(theme.indexOf('/') === -1){
+          return 'theme/' + theme + '.html';
+        } else {
+          return theme;
+        }
       }
     };
   }]);
