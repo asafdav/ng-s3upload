@@ -40,7 +40,7 @@ expand the "Permissions" sections and click on the "Add more permissions" button
 
   Once the CORS permissions are updated, your bucket is ready for client side uploads.
 
-4. Create a server side service that will return the needed details for uploading files to S3.
+4. <a name="json-format"></a> Create a server side service that will return the needed details for uploading files to S3.
 your service shall return a json in the following format:
 
   ```json
@@ -129,7 +129,7 @@ attributes:
 * bucket - Specify the wanted bucket
 * s3-upload-options - Provide additional options:
   * getOptionsUri - The uri of the server service that is needed to sign the request (mentioned in section Setup#4) - Required if second option is empty.
-  * getManualOptions - if for some reason you need to have your own mechanism of getting a policy, you can simply assign your scope variable to this option. Note it should be resolved on the moment of directive load.
+  * getManualOptions - if for some reason you need to have your own mechanism of getting a policy, you can simply assign your scope variable to this option. The variable can either be an object (note it should be resolved on the moment of directive load) or a function taking a callback, which will be called with an object in the format described [in section Setup](#json-format).
   * folder - optional, specifies a folder inside the bucket the save the file to
   * enableValidation - optional, set to "false" in order to disable the field validation.
   * targetFilename - An optional attribute for the target filename. if provided the file will be renamed to the provided value instead of having the file original filename.
