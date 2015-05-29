@@ -265,7 +265,7 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
   $templateCache.put('theme/bootstrap2.html',
     "<div class=\"upload-wrap\">\n" +
     "  <button class=\"btn btn-primary\" type=\"button\"><span ng-if=\"!filename\">Choose file</span><span ng-if=\"filename\">Replace file</span></button>\n" +
-    "  <a ng-href=\"{{ filename  }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" > Stored file </a>\n" +
+    "  <a ng-href=\"{{ filename  }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" >Stored file</a>\n" +
     "  <div class=\"progress progress-striped\" ng-class=\"{active: uploading}\" ng-show=\"attempt\" style=\"margin-top: 10px\">\n" +
     "    <div class=\"bar\" style=\"width: {{ progress }}%;\" ng-class=\"barClass()\"></div>\n" +
     "    </div>\n" +
@@ -277,7 +277,7 @@ angular.module('ngS3upload').run(['$templateCache', function($templateCache) {
   $templateCache.put('theme/bootstrap3.html',
     "<div class=\"upload-wrap\">\n" +
     "  <button class=\"btn btn-primary\" type=\"button\"><span ng-if=\"!filename\">Choose file</span><span ng-if=\"filename\">Replace file</span></button>\n" +
-    "  <a ng-href=\"{{ filename }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" > Stored file </a>\n" +
+    "  <a ng-href=\"{{ filename }}\" target=\"_blank\" class=\"\" ng-if=\"filename\" >Stored file</a>\n" +
     "  <div class=\"progress\">\n" +
     "    <div class=\"progress-bar progress-bar-striped\" ng-class=\"{active: uploading}\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ progress }}%; margin-top: 10px\" ng-class=\"barClass()\">\n" +
     "      <span class=\"sr-only\">{{progress}}% Complete</span>\n" +
