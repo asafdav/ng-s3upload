@@ -24,14 +24,16 @@ angular.module('ngS3upload.services', []).
     };
 
 
-    this.upload = function (scope, uri, key, acl, type, accessKey, policy, signature, file) {
+    this.upload = function (scope, uri, key, opts, type, accessKey, policy, signature, file) {
       var deferred = $q.defer();
       scope.attempt = true;
 
       var fd = new FormData();
       fd.append('key', key);
-      fd.append('acl', acl);
-      fd.append('Content-Type', file.type);
+      fd.append('acl', opts.acl);
+      if (!opts.excludeContentType) { 
+        fd.append('Content-Type', file.type);
+      }
       fd.append('AWSAccessKeyId', accessKey);
       fd.append('policy', policy);
       fd.append('signature', signature);
