@@ -1,5 +1,5 @@
 angular.module('ngS3upload.directives', []).
-  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', function ($parse, S3Uploader, ngS3Config) {
+  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', '$timeout', function ($parse, S3Uploader, ngS3Config, $timeout) {
     return {
       restrict: 'AC',
       require: '?ngModel',
@@ -43,7 +43,9 @@ angular.module('ngS3upload.directives', []).
             var button = angular.element(element.children()[0]),
               file = angular.element(element.find("input")[0]);
             button.bind('click', function (e) {
-              file[0].click();
+              $timeout(function () {
+                file[0].click();
+              }, 0);
             });
 
             // Update the scope with the view value
