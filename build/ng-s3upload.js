@@ -142,7 +142,7 @@ angular.module('ngS3upload.config', []).
     };
   }]);
 angular.module('ngS3upload.directives', []).
-  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', function ($parse, S3Uploader, ngS3Config) {
+  directive('s3Upload', ['$parse', 'S3Uploader', 'ngS3Config', '$timeout', function ($parse, S3Uploader, ngS3Config, $timeout) {
     return {
       restrict: 'AC',
       require: '?ngModel',
@@ -173,6 +173,7 @@ angular.module('ngS3upload.directives', []).
             opts = angular.extend({
               submitOnChange: true,
               getOptionsUri: '/getS3Options',
+              getManualOptions: null,
               acl: 'public-read',
               uploadingKey: 'uploading',
               folder: '',
@@ -185,7 +186,9 @@ angular.module('ngS3upload.directives', []).
             var button = angular.element(element.children()[0]),
               file = angular.element(element.find("input")[0]);
             button.bind('click', function (e) {
-              file[0].click();
+              $timeout(function () {
+                file[0].click();
+              }, 0);
             });
 
             // Update the scope with the view value
@@ -198,7 +201,17 @@ angular.module('ngS3upload.directives', []).
               var filename = selectedFile.name;
               var ext = filename.split('.').pop();
 
-              S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
+              if(angular.isObject(opts.getManualOptions)) {
+                _upload(opts.getManualOptions);
+              } else {
+                S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
+                  _upload(s3Options);
+                }, function (error) {
+                  throw Error("Can't receive the needed options for S3 " + error);
+                });
+              }
+
+              function _upload(s3Options){
                 if (opts.enableValidation) {
                   ngModel.$setValidity('uploading', false);
                 }
@@ -230,11 +243,7 @@ angular.module('ngS3upload.directives', []).
                       ngModel.$setValidity('succeeded', false);
                     }
                   });
-
-              }, function (error) {
-                throw Error("Can't receive the needed options for S3 " + error);
-              });
-
+              }
             };
 
             element.bind('change', function (nVal) {
