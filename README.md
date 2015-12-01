@@ -135,13 +135,15 @@ attributes:
   * targetFilename - An optional attribute for the target filename. if provided the file will be renamed to the provided value instead of having the file original filename.
 
 ## Themes
-ng-s3upload allows to customize the directive template using themes. Currently the available themes are: bootstrap2, bootstrap3
+ng-s3upload allows to customize the directive template using themes. Currently the available themes are: bootstrap2, bootstrap3.
+You can also use your own template (if so, the provided path must start with a `/`).
 
 #### How to?
 
 ```javascript
 app.config(function(ngS3Config) {
   ngS3Config.theme = 'bootstrap3';
+  ngS3Config.theme = '/path/to/custom/theme.html';
 });
 ```
 

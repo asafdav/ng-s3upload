@@ -1,4 +1,4 @@
-angular.module('ngS3upload.services', []).
+angular.module('ngS3upload.services').
   service('S3Uploader', ['$http', '$q', '$window', function ($http, $q, $window) {
     this.uploads = 0;
     var self = this;
