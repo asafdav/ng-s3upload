@@ -56,7 +56,12 @@ angular.module('ngS3upload.directives').
 
               if(angular.isObject(opts.getManualOptions)) {
                 _upload(opts.getManualOptions);
-              } else {
+              } else if(angular.isFunction(opts.getManualOptions)) {
+                opts.getManualOptions(function (options) {
+                  _upload(options);
+                });
+              }
+              else {
                 S3Uploader.getUploadOptions(opts.getOptionsUri).then(function (s3Options) {
                   _upload(s3Options);
                 }, function (error) {
