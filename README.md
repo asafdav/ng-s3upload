@@ -123,6 +123,7 @@ npm install ng-s3upload
   ```html
   <div s3-upload bucket="s3Bucket" ng-model="product.remote_product_file_url"
      s3-upload-options="{getOptionsUri: s3OptionsUri, folder: 'images/'}">
+  </div>
   ```
 
 attributes:
