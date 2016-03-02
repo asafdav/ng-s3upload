@@ -78,7 +78,7 @@ angular.module('ngS3upload.directives').
                   key = key.replace('%uploader.folder%', opts.folder || '');
                   key = key.replace('%uploader.date%', (new Date()).getTime());
                   key = key.replace('%uploader.date_ms%', (new Date()).getTime());
-                  key = key.replace('%uploader.date_sec%', Math.floor((new Date()).getTime()/1000);
+                  key = key.replace('%uploader.date_sec%', Math.floor((new Date()).getTime()/1000));
                 }
                 S3Uploader.upload(scope,
                     s3Uri,
