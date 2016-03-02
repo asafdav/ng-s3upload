@@ -70,7 +70,8 @@ angular.module('ngS3upload.directives').
                 }
 
                 var s3Uri = 'https://' + bucket + '.s3.amazonaws.com/';
-                var key = opts.targetFilename ? scope.$eval(opts.targetFilename) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(16) + "." + ext;
+                var randomStringLength = opts.randomLength || 16;
+                var key = opts.targetFilename ? scope.$eval(opts.targetFilename) : opts.folder + (new Date()).getTime() + '-' + S3Uploader.randomString(randomStringLength) + "." + ext;
                 if(opts.targetFilename) {
                   key = key.replace('%file.name%', filename);
                   key = key.replace('%file.ext%', ext);
