@@ -105,7 +105,7 @@ bower install ng-s3upload
 
 #### Npm
 ```
-npm install ng-s3upload
+npm install ngs3upload
 ```
 
 
